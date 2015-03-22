@@ -1,0 +1,21 @@
+## Interface: 60100
+## Title: WhichBossesAreLeft
+## Notes: Shows which raid bosses have not been killed this week
+## Author: Marihk
+## Version: v1.0
+## OptionalDeps: LibDBIcon-1.0
+## SavedVariables: HeroicRaidReadyDB
+
+lib\LibStub\Libstub.lua
+lib\CallbackHandler-1.0\CallbackHandler-1.0.lua
+lib\LibDataBroker-1.1\LibDataBroker-1.1.lua
+lib\LibDBIcon-1.0\LibDBIcon-1.0.lua
+lib\AceAddon-3.0\AceAddon-3.0.xml
+lib\AceEvent-3.0\AceEvent-3.0.xml
+lib\AceDB-3.0\AceDB-3.0.xml
+lib\DropDownMenu-1.1\UIDropDownMenuTemplates.xml
+lib\DropDownMenu-1.1\UIDropDownMenu.lua
+
+WhichBossesAreLeft.lua
+WhichBossesAreLeft-LDB.lua
+WhichBossesAreLeft-Frames.lua
