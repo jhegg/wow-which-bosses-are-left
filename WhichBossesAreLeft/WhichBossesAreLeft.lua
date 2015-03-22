@@ -119,7 +119,6 @@ end
 
 function addon:OnEnable()
     WhichBossesAreLeft.frame = WhichBossesAreLeft:CreateFrames()
-    WhichBossesAreLeft.frame.entries = WhichBossesAreLeft:CreateEntryFrames(WhichBossesAreLeft.frame)
 
     -- Construct master list placeholders
     for mapName in pairs(WhichBossesAreLeft.currentRaids) do

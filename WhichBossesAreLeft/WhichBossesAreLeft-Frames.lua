@@ -28,7 +28,7 @@ function WhichBossesAreLeft:CreateFrames()
 
     frame.rootFrame = WhichBossesAreLeft:CreateRootFrame(frame)
 
-    frame.entries = {}
+    frame.entries = WhichBossesAreLeft:CreateEntryFrames(frame)
 
     return frame
 end
