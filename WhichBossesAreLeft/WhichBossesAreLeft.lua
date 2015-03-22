@@ -21,7 +21,7 @@ WhichBossesAreLeft = {
     masterList = {}, -- The data about active instance locks and which bosses are killed.
     flattenedList = {}, -- The flat list of text to be displayed in the window, derived from the masterList.
     frame = {},
-    numberOfRows = 16,
+    numberOfRows = 20,
 }
 
 WhichBossesAreLeft.addon = LibStub("AceAddon-3.0"):NewAddon(addonName, "AceEvent-3.0")
@@ -91,7 +91,7 @@ local function UpdateEntries()
     local currentEntry = 0
     for _, listEntry in pairs(WhichBossesAreLeft.flattenedList) do
         currentEntry = currentEntry + 1
-        if currentEntry == WhichBossesAreLeft.numberOfRows then
+        if currentEntry > WhichBossesAreLeft.numberOfRows then
             return
         end
         if listEntry.isInstanceName then
