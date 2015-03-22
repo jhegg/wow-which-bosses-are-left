@@ -115,6 +115,12 @@ function WhichBossesAreLeft:CreateEntryFrames(frame)
     return entries;
 end
 
+function WhichBossesAreLeft:ClearCurrentEntryFrames()
+    for i=1,WhichBossesAreLeft.numberOfRows do
+        WhichBossesAreLeft.frame.entries[i].name:SetText("")
+    end
+end
+
 function WhichBossesAreLeft:CreateEntryFrame(frame,entries,i)
     local entry = CreateFrame("Button", nil, frame.outline);
     entry:SetWidth(WhichBossesAreLeft.ITEM_HEIGHT);

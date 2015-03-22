@@ -18,7 +18,8 @@ WhichBossesAreLeft = {
         "Normal",
         "Heroic",
     },
-    masterList = {},
+    masterList = {}, -- The data about active instance locks and which bosses are killed.
+    flattenedList = {}, -- The flat list of text to be displayed in the window, derived from the masterList.
     frame = {},
     numberOfRows = 16,
 }
@@ -32,10 +33,7 @@ SlashCmdList["WHICHBOSSESARELEFT"] = function()
     WhichBossesAreLeft:DisplayWindow()
 end
 
-function WhichBossesAreLeft:GetRemainingBosses()
-    local bossesLeft = {}
-    local numRaids = 0
-
+function WhichBossesAreLeft:UpdateRemainingBosses()
     for instanceNumber=1,GetNumSavedInstances() do
         local name, _, _, difficulty, locked, _, _, isRaid, _, difficultyName, numEncounters, _ = GetSavedInstanceInfo(instanceNumber)
 
@@ -52,69 +50,50 @@ function WhichBossesAreLeft:GetRemainingBosses()
                 listEntry.bosses[bossNumber].isKilled = isKilled
             end
         end
+    end
+end
 
+function WhichBossesAreLeft:RebuildFlattenedList()
+    local flattenedList = {}
+    local counter = 0
 
-
-        if (isRaid and locked and WhichBossesAreLeft.currentRaids[name]) then
-            numRaids = numRaids + 1
-            bossesLeft[numRaids] = {}
-            bossesLeft[numRaids].title = "Instance: "..difficultyName.." "..name.." ("..numEncounters.." bosses)"
-
-            local numBossesLeftAlive = 0
-            bossesLeft[numRaids].boss = {}
-            for bossNumber=1,numEncounters do
-                local bossName, _, isKilled, _ = GetSavedInstanceEncounterInfo(instanceNumber, bossNumber)
-                bossesLeft[numRaids].boss[bossNumber] = {}
-                bossesLeft[numRaids].boss[bossNumber].name = bossName
-                bossesLeft[numRaids].boss[bossNumber].isKilled = isKilled
+    for mapName, difficulty in pairs(WhichBossesAreLeft.masterList) do
+        for difficultyId, value in pairs (difficulty) do
+            counter = counter + 1
+            if (value.activeLock) then
+                flattenedList[counter] = value.title
+                for _, bossValue in pairs(value.bosses) do
+                    counter = counter + 1
+                    if bossValue.isKilled then
+                        flattenedList[counter] = "      > "..bossValue.name.." (dead)"
+                    else
+                        flattenedList[counter] = "      > "..bossValue.name
+                    end
+                end
+            else
+                local difficultyName = GetDifficultyInfo(difficultyId)
+                flattenedList[counter] = difficultyName.." "..mapName.." (No kills)"
             end
-            bossesLeft[numRaids].numBossesLeftAlive = numBossesLeftAlive
-            bossesLeft[numRaids].numEncounters = numEncounters
         end
     end
 
-    return bossesLeft, numRaids
-end
-
-local function ClearEntries()
-    for i=1,WhichBossesAreLeft.numberOfRows do
-        WhichBossesAreLeft.frame.entries[i].name:SetText("")
-    end
+    WhichBossesAreLeft.flattenedList = flattenedList
 end
 
 local function UpdateEntries()
     local entries = WhichBossesAreLeft.frame.entries
-    local bossesLeft, numRaids = WhichBossesAreLeft:GetRemainingBosses()
-    WhichBossesAreLeft.remainingBosses = bossesLeft
+    WhichBossesAreLeft:UpdateRemainingBosses()
+    WhichBossesAreLeft:RebuildFlattenedList()
+    WhichBossesAreLeft:ClearCurrentEntryFrames()
 
-    ClearEntries()
-
-    if bossesLeft then
-        local currentEntry = 0
-        -- todo iterate over the number of rows
-        --      todo add rows for instance and boss pairs
-        --      todo if we hit the max row number, stop updating
-        for i=1,numRaids do
-            currentEntry = currentEntry + 1
-            if currentEntry == WhichBossesAreLeft.numberOfRows then
-                return
-            end
-
-            entries[currentEntry].name:SetText(bossesLeft[i].title)
-            entries[currentEntry].name:SetTextColor(0, 1.0, 0)
-
-            for j=1,bossesLeft[i].numEncounters do
-                currentEntry = currentEntry + 1
-                if currentEntry == WhichBossesAreLeft.numberOfRows then
-                    return
-                end
-
-                entries[currentEntry].name:SetText(bossesLeft[i].boss[j].name.." killed="..tostring(bossesLeft[i].boss[j].isKilled))
-                entries[currentEntry].name:SetTextColor(0, 1.0, 0)
-            end
+    local currentEntry = 0
+    for _, value in pairs(WhichBossesAreLeft.flattenedList) do
+        currentEntry = currentEntry + 1
+        if currentEntry == WhichBossesAreLeft.numberOfRows then
+            return
         end
-    else
-        entries[1].name:SetText("No bosses are left alive for this week!")
+        entries[currentEntry].name:SetText(value)
+        entries[currentEntry].name:SetTextColor(0, 1.0, 0)
     end
 end
 
