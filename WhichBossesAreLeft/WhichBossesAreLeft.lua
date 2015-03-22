@@ -1,12 +1,18 @@
 local addonName, _ = ...
 
+local highmaulMapId = 994 -- see: http://wow.gamepedia.com/MapID#Draenor_Raids
+local blackrockFoundryMapId = 988
+
+local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
+local heroicDifficultyId = 15
+
 WhichBossesAreLeft = {
     name = addonName,
     version = GetAddOnMetadata(addonName, "Version"),
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
-        [GetMapNameByID(994)] = true, -- Highmaul
-        [GetMapNameByID(988)] = true, -- Blackrock Foundry
+        [GetMapNameByID(highmaulMapId)] = true,
+        [GetMapNameByID(blackrockFoundryMapId)] = true,
     },
     difficulties = {
         "Normal",
@@ -30,12 +36,25 @@ function WhichBossesAreLeft:GetRemainingBosses()
     local bossesLeft = {}
     local numRaids = 0
 
-    local masterList = {}
-    WhichBossesAreLeft.masterList = {}
-
     for instanceNumber=1,GetNumSavedInstances() do
-        local name, _, _, _, locked, _, _, isRaid, _, difficultyName,
-        numEncounters, _ = GetSavedInstanceInfo(instanceNumber)
+        local name, _, _, difficulty, locked, _, _, isRaid, _, difficultyName, numEncounters, _ = GetSavedInstanceInfo(instanceNumber)
+
+        if (isRaid and locked and WhichBossesAreLeft.currentRaids[name]) then
+            local listEntry = WhichBossesAreLeft.masterList[name][difficulty]
+            listEntry.activeLock = true
+            listEntry.title = difficultyName.." "..name
+            listEntry.bosses = {}
+
+            for bossNumber=1,numEncounters do
+                local bossName, _, isKilled, _ = GetSavedInstanceEncounterInfo(instanceNumber, bossNumber)
+                listEntry.bosses[bossNumber] = {}
+                listEntry.bosses[bossNumber].name = bossName
+                listEntry.bosses[bossNumber].isKilled = isKilled
+            end
+        end
+
+
+
         if (isRaid and locked and WhichBossesAreLeft.currentRaids[name]) then
             numRaids = numRaids + 1
             bossesLeft[numRaids] = {}
@@ -107,4 +126,16 @@ end
 function addon:OnEnable()
     WhichBossesAreLeft.frame = WhichBossesAreLeft:CreateFrames()
     WhichBossesAreLeft.frame.entries = WhichBossesAreLeft:CreateEntryFrames(WhichBossesAreLeft.frame)
+
+    -- Construct master list placeholders
+    for mapName in pairs(WhichBossesAreLeft.currentRaids) do
+        WhichBossesAreLeft.masterList[mapName] = {
+            [normalDifficultyId] = {
+                activeLock = false
+            },
+            [heroicDifficultyId] = {
+                activeLock = false
+            },
+        }
+    end
 end
