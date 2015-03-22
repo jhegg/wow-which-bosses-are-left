@@ -60,19 +60,21 @@ function WhichBossesAreLeft:RebuildFlattenedList()
     for mapName, difficulty in pairs(WhichBossesAreLeft.masterList) do
         for difficultyId, value in pairs (difficulty) do
             counter = counter + 1
+            flattenedList[counter] = {}
             if (value.activeLock) then
-                flattenedList[counter] = value.title
+                flattenedList[counter].isInstanceName = true
+                flattenedList[counter].text = value.title
+
                 for _, bossValue in pairs(value.bosses) do
                     counter = counter + 1
-                    if bossValue.isKilled then
-                        flattenedList[counter] = "      > "..bossValue.name.." (dead)"
-                    else
-                        flattenedList[counter] = "      > "..bossValue.name
-                    end
+                    flattenedList[counter] = {}
+                    flattenedList[counter].isKilled = bossValue.isKilled
+                    flattenedList[counter].text = "      > "..bossValue.name
                 end
             else
                 local difficultyName = GetDifficultyInfo(difficultyId)
-                flattenedList[counter] = difficultyName.." "..mapName.." (No kills)"
+                flattenedList[counter].text = difficultyName.." "..mapName.." (No kills)"
+                flattenedList[counter].isInstanceName = true
             end
         end
     end
@@ -87,13 +89,26 @@ local function UpdateEntries()
     WhichBossesAreLeft:ClearCurrentEntryFrames()
 
     local currentEntry = 0
-    for _, value in pairs(WhichBossesAreLeft.flattenedList) do
+    for _, listEntry in pairs(WhichBossesAreLeft.flattenedList) do
         currentEntry = currentEntry + 1
         if currentEntry == WhichBossesAreLeft.numberOfRows then
             return
         end
-        entries[currentEntry].name:SetText(value)
-        entries[currentEntry].name:SetTextColor(0, 1.0, 0)
+        if listEntry.isInstanceName then
+            entries[currentEntry].name:SetText(listEntry.text)
+            entries[currentEntry].name:SetTextColor(1.0, 1.0, 1.0)
+        else
+            entries[currentEntry].name:SetText(listEntry.text)
+            if listEntry.isKilled then
+                entries[currentEntry].value:SetText("Defeated")
+                entries[currentEntry].name:SetTextColor(1.0, 0, 0)
+                entries[currentEntry].value:SetTextColor(1.0, 0, 0)
+            else
+                entries[currentEntry].value:SetText("Available")
+                entries[currentEntry].name:SetTextColor(0, 1.0, 0)
+                entries[currentEntry].value:SetTextColor(0, 1.0, 0)
+            end
+        end
     end
 end
 
