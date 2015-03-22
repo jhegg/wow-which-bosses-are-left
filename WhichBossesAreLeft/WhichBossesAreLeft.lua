@@ -5,23 +5,14 @@ WhichBossesAreLeft = {
     version = GetAddOnMetadata(addonName, "Version"),
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
-        ["Highmaul"] = true,
-        ["Blackrock Foundry"] = true,
+        [GetMapNameByID(994)] = true, -- Highmaul
+        [GetMapNameByID(988)] = true, -- Blackrock Foundry
     },
     difficulties = {
         "Normal",
         "Heroic",
     },
-    trackedRaids = {
-        highmaul = {
-            normal = {},
-            heroic = {},
-        },
-        blackrockFoundry = {
-            normal = {},
-            heroic = {},
-        },
-    },
+    masterList = {},
     frame = {},
     numberOfRows = 16,
 }
@@ -39,6 +30,9 @@ function WhichBossesAreLeft:GetRemainingBosses()
     local bossesLeft = {}
     local numRaids = 0
 
+    local masterList = {}
+    WhichBossesAreLeft.masterList = {}
+
     for instanceNumber=1,GetNumSavedInstances() do
         local name, _, _, _, locked, _, _, isRaid, _, difficultyName,
         numEncounters, _ = GetSavedInstanceInfo(instanceNumber)
@@ -48,14 +42,15 @@ function WhichBossesAreLeft:GetRemainingBosses()
             bossesLeft[numRaids].title = "Instance: "..difficultyName.." "..name.." ("..numEncounters.." bosses)"
 
             local numBossesLeftAlive = 0
+            bossesLeft[numRaids].boss = {}
             for bossNumber=1,numEncounters do
                 local bossName, _, isKilled, _ = GetSavedInstanceEncounterInfo(instanceNumber, bossNumber)
-                if (not isKilled) then
-                    bossesLeft[numRaids].boss = {}
-                    bossesLeft[numRaids].boss[numBossesLeftAlive] = bossName
-                end
+                bossesLeft[numRaids].boss[bossNumber] = {}
+                bossesLeft[numRaids].boss[bossNumber].name = bossName
+                bossesLeft[numRaids].boss[bossNumber].isKilled = isKilled
             end
             bossesLeft[numRaids].numBossesLeftAlive = numBossesLeftAlive
+            bossesLeft[numRaids].numEncounters = numEncounters
         end
     end
 
@@ -89,13 +84,13 @@ local function UpdateEntries()
             entries[currentEntry].name:SetText(bossesLeft[i].title)
             entries[currentEntry].name:SetTextColor(0, 1.0, 0)
 
-            for j=1,bossesLeft[i].numBossesLeftAlive do
+            for j=1,bossesLeft[i].numEncounters do
                 currentEntry = currentEntry + 1
                 if currentEntry == WhichBossesAreLeft.numberOfRows then
                     return
                 end
 
-                entries[currentEntry].name:SetText(bossesLeft[i].boss[j])
+                entries[currentEntry].name:SetText(bossesLeft[i].boss[j].name.." killed="..tostring(bossesLeft[i].boss[j].isKilled))
                 entries[currentEntry].name:SetTextColor(0, 1.0, 0)
             end
         end
