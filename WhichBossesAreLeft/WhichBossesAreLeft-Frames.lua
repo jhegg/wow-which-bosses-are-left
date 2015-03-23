@@ -30,6 +30,8 @@ function WhichBossesAreLeft:CreateFrames()
 
     frame.entries = WhichBossesAreLeft:CreateEntryFrames(frame)
 
+    frame.scrollFrame = WhichBossesAreLeft:CreateScrollFrame(frame)
+
     return frame
 end
 
@@ -147,4 +149,61 @@ function WhichBossesAreLeft:CreateEntryFrame(frame,entries,i)
     entry.value:SetJustifyH("RIGHT");
 
     return entry
+end
+
+function WhichBossesAreLeft:UpdateEntry(entry, text, isInstanceName, isKilled)
+    if isInstanceName then
+        entry.name:SetText(text)
+        entry.name:SetTextColor(1.0, 1.0, 1.0)
+    else
+        entry.name:SetText(text)
+        if isKilled then
+            entry.value:SetText("Defeated")
+            entry.name:SetTextColor(1.0, 0, 0)
+            entry.value:SetTextColor(1.0, 0, 0)
+        else
+            entry.value:SetText("Available")
+            entry.name:SetTextColor(0, 1.0, 0)
+            entry.value:SetTextColor(0, 1.0, 0)
+        end
+    end
+end
+
+local function entryListUpdate()
+    WhichBossesAreLeft:EntryListUpdate()
+end
+
+function WhichBossesAreLeft:EntryListUpdate()
+    local frame = WhichBossesAreLeft.frame
+    local entries = WhichBossesAreLeft.frame.entries
+
+    FauxScrollFrame_Update(frame.scrollFrame,
+        WhichBossesAreLeft.flattenedListSize,
+        WhichBossesAreLeft.numberOfRows,
+        WhichBossesAreLeft.ITEM_HEIGHT);
+    local offset = FauxScrollFrame_GetOffset(frame.scrollFrame)
+
+    for line = 1, WhichBossesAreLeft.numberOfRows do
+        local listNumber = offset + line
+        if listNumber > WhichBossesAreLeft.flattenedListSize then
+            entries[line]:Hide()
+        else
+            local listEntry = WhichBossesAreLeft.flattenedList[listNumber]
+            WhichBossesAreLeft:UpdateEntry(entries[line], listEntry.text, listEntry.isInstanceName, listEntry.isKilled)
+            entries[line]:Show()
+        end
+    end
+end
+
+function WhichBossesAreLeft:CreateScrollFrame(frame)
+    local scrollFrame = CreateFrame("ScrollFrame", "WhichBossesAreLeftScrollFrame", frame, "FauxScrollFrameTemplate")
+    scrollFrame:SetPoint("TOPLEFT", frame.entries[1])
+    scrollFrame:SetPoint("BOTTOMRIGHT", frame.entries[#frame.entries], -6, -1)
+    scrollFrame:SetScript("OnShow", entryListUpdate)
+    scrollFrame:SetScript("OnVerticalScroll",
+        function(self,offset)
+            FauxScrollFrame_OnVerticalScroll(self, offset, WhichBossesAreLeft.ITEM_HEIGHT, entryListUpdate)
+        end)
+    scrollFrame.ScrollBar.scrollStep = 1 * WhichBossesAreLeft.ITEM_HEIGHT
+    return scrollFrame
 end

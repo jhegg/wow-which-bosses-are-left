@@ -20,6 +20,7 @@ WhichBossesAreLeft = {
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
     flattenedList = {}, -- The flat list of text to be displayed in the window, derived from the masterList.
+    flattenedListSize = 0,
     frame = {},
     numberOfRows = 20,
 }
@@ -80,36 +81,14 @@ function WhichBossesAreLeft:RebuildFlattenedList()
     end
 
     WhichBossesAreLeft.flattenedList = flattenedList
+    WhichBossesAreLeft.flattenedListSize = counter
 end
 
 local function UpdateEntries()
-    local entries = WhichBossesAreLeft.frame.entries
     WhichBossesAreLeft:UpdateRemainingBosses()
     WhichBossesAreLeft:RebuildFlattenedList()
     WhichBossesAreLeft:ClearCurrentEntryFrames()
-
-    local currentEntry = 0
-    for _, listEntry in pairs(WhichBossesAreLeft.flattenedList) do
-        currentEntry = currentEntry + 1
-        if currentEntry > WhichBossesAreLeft.numberOfRows then
-            return
-        end
-        if listEntry.isInstanceName then
-            entries[currentEntry].name:SetText(listEntry.text)
-            entries[currentEntry].name:SetTextColor(1.0, 1.0, 1.0)
-        else
-            entries[currentEntry].name:SetText(listEntry.text)
-            if listEntry.isKilled then
-                entries[currentEntry].value:SetText("Defeated")
-                entries[currentEntry].name:SetTextColor(1.0, 0, 0)
-                entries[currentEntry].value:SetTextColor(1.0, 0, 0)
-            else
-                entries[currentEntry].value:SetText("Available")
-                entries[currentEntry].name:SetTextColor(0, 1.0, 0)
-                entries[currentEntry].value:SetTextColor(0, 1.0, 0)
-            end
-        end
-    end
+    WhichBossesAreLeft:EntryList_Update()
 end
 
 function WhichBossesAreLeft:DisplayWindow()
