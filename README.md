@@ -15,3 +15,9 @@ raid finder window.
 
 This addon integrates with LibDataBroker compatible panels (such as Bazooka and Titan Panel), so you can simply
 click on the icon to open the window. Or, you can type `/whichbossesareleft`.
+
+## What does it look like?
+
+![](https://github.com/jhegg/wow-which-bosses-are-left/blob/gh-pages/images/which-bosses-are-left_top.png)
+
+![](https://github.com/jhegg/wow-which-bosses-are-left/blob/gh-pages/images/which-bosses-are-left_bottom.png)
