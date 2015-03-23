@@ -88,7 +88,7 @@ local function UpdateEntries()
     WhichBossesAreLeft:UpdateRemainingBosses()
     WhichBossesAreLeft:RebuildFlattenedList()
     WhichBossesAreLeft:ClearCurrentEntryFrames()
-    WhichBossesAreLeft:EntryList_Update()
+    WhichBossesAreLeft:EntryListUpdate()
 end
 
 function WhichBossesAreLeft:DisplayWindow()

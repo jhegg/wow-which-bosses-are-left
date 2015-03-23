@@ -155,6 +155,7 @@ function WhichBossesAreLeft:UpdateEntry(entry, text, isInstanceName, isKilled)
     if isInstanceName then
         entry.name:SetText(text)
         entry.name:SetTextColor(1.0, 1.0, 1.0)
+        entry.value:SetText("")
     else
         entry.name:SetText(text)
         if isKilled then
