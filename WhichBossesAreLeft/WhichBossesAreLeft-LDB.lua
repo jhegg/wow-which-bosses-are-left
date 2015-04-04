@@ -16,5 +16,17 @@ function ldb:OnClick(clickedFrame, button)
 end
 
 function ldb:OnTooltipShow()
-    self:AddLine(format("%s %s", WhichBossesAreLeft.name, WhichBossesAreLeft.version))
+  WhichBossesAreLeft:UpdateEntries()
+  self:AddLine(format("%s %s", WhichBossesAreLeft.name, WhichBossesAreLeft.version))
+  self:AddLine("------------------------------")
+  for line = 1, WhichBossesAreLeft.flattenedListSize do
+    local listEntry = WhichBossesAreLeft.flattenedList[line]
+    if listEntry.isInstanceName then
+      self:AddLine(format("|cFFFFFFFF%s|r", listEntry.text))
+    else
+      if not listEntry.isKilled then
+        self:AddLine(format("|cFF00FF00%s|r", listEntry.text))
+      end
+    end
+  end
 end

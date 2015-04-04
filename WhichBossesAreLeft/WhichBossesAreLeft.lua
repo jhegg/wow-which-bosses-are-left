@@ -84,7 +84,7 @@ function WhichBossesAreLeft:RebuildFlattenedList()
     WhichBossesAreLeft.flattenedListSize = counter
 end
 
-local function UpdateEntries()
+function WhichBossesAreLeft:UpdateEntries()
     WhichBossesAreLeft:UpdateRemainingBosses()
     WhichBossesAreLeft:RebuildFlattenedList()
     WhichBossesAreLeft:ClearCurrentEntryFrames()
@@ -92,7 +92,7 @@ local function UpdateEntries()
 end
 
 function WhichBossesAreLeft:DisplayWindow()
-    UpdateEntries()
+    WhichBossesAreLeft:UpdateEntries()
     WhichBossesAreLeft.frame:Show()
 end
 
