@@ -9,16 +9,19 @@ killed this week.
 I wrote this addon to make it easier to use the Raid Finder for normal and
 heroic difficulty Draenor raids. For example, I may have missed a guild raid
 night, and still need to kill one or more bosses for the week. I want to see
-the names of those bosses that are left alive while the raid finder window is open.
-You can get the same information through the default UI, but it takes several
-clicks to get to it, and it hides behind the raid finder window.
+the names of those bosses that are left alive while the raid finder window is
+open. You can get the same information through the default UI, but it takes
+several clicks to get to it, and it hides behind the raid finder window.
+
+Based on a request, this addon will now also display which Looking For Raid
+difficulty bosses are available for the week.
 
 ## How do I use it?
 
 This addon integrates with LibDataBroker compatible panels (such as Bazooka and
-  Titan Panel), so you can simply mouseover the LDB icon, or click on the icon
-  to open a moveable window. Or, you can type `/whichbossesareleft` to open
-  the window.
+Titan Panel), so you can simply mouseover the LDB icon, or click on the icon
+to open a moveable window. Or, you can type `/whichbossesareleft` to open
+the window.
 
 ## What does it look like?
 
