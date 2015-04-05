@@ -31,6 +31,14 @@ difficulty bosses are available for the week.
 
 ## What does it look like?
 
+![](https://github.com/jhegg/wow-which-bosses-are-left/blob/gh-pages/images/which-bosses-are-left-tooltip.png)
+
 ![](https://github.com/jhegg/wow-which-bosses-are-left/blob/gh-pages/images/which-bosses-are-left_top.png)
 
 ![](https://github.com/jhegg/wow-which-bosses-are-left/blob/gh-pages/images/which-bosses-are-left_bottom.png)
+
+## Where can I download official releases of this addon?
+
+* [WoWInterface](http://www.wowinterface.com/downloads/info23546-WhichBossesAreLeft.html)
+* [Curse](http://www.curse.com/addons/wow/whichbossesareleft)
+* [GitHub (development site)](https://github.com/jhegg/wow-which-bosses-are-left/)
