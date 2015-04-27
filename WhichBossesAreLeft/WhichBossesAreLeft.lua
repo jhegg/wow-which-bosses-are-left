@@ -22,15 +22,15 @@ WhichBossesAreLeft = {
     },
     raidFinderIds = {
       [GetMapNameByID(highmaulMapId)] = {
-        {raidId = 849, start = 1, encounterEnd = 3}, -- Highmaul: Walled City
-        {raidId = 850, start = 4, encounterEnd = 6}, -- Highmaul: Arcane Sanctum
-        {raidId = 851, start = 7, encounterEnd = 7}, -- Highmaul: Imperator's Rise
+        {raidId = 849, start = 1, encounterEnd = 7}, -- Highmaul: Walled City
+        {raidId = 850, start = 1, encounterEnd = 7}, -- Highmaul: Arcane Sanctum
+        {raidId = 851, start = 1, encounterEnd = 7}, -- Highmaul: Imperator's Rise
       },
       [GetMapNameByID(blackrockFoundryMapId)] = {
-        {raidId = 847, start = 1, encounterEnd = 3}, -- Blackrock Foundry: Slagworks
-        {raidId = 846, start = 4, encounterEnd = 6}, -- Blackrock Foundry: The Black Forge
-        {raidId = 848, start = 7, encounterEnd = 9}, -- Blackrock Foundry: Iron Assembly
-        {raidId = 823, start = 10, encounterEnd = 10}, -- Blackrock Foundry: Blackhand's Crucible
+        {raidId = 847, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Slagworks
+        {raidId = 846, start = 1, encounterEnd = 10}, -- Blackrock Foundry: The Black Forge
+        {raidId = 848, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Iron Assembly
+        {raidId = 823, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Blackhand's Crucible
       },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
@@ -90,11 +90,19 @@ local function UpdateRaidFinderBossesFromLocation(location, setOfRaidIds)
 
     for _, value in ipairs(setOfRaidIds) do
       local numEncounters, numCompleted = GetLFGDungeonNumEncounters(value.raidId)
+
+      -- Since the encounters are out of order, just loop over all of them
+      -- for each encounterId, and if any have isKilled=true, then set it to true.
       for encounterId = value.start, value.encounterEnd do
         local bossName, texture, isKilled, result4 = GetLFGDungeonEncounterInfo(value.raidId, encounterId)
-        listEntry.bosses[encounterId] = {}
-        listEntry.bosses[encounterId].name = bossName
-        listEntry.bosses[encounterId].isKilled = isKilled
+        if not listEntry.bosses[encounterId] then
+          listEntry.bosses[encounterId] = {}
+          listEntry.bosses[encounterId].name = bossName
+        end
+
+        if not listEntry.bosses[encounterId].isKilled then
+          listEntry.bosses[encounterId].isKilled = isKilled
+        end
       end
     end
   end
