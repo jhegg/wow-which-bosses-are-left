@@ -6,8 +6,8 @@ killed this week.
 
 ## What does it do?
 
-WhichBossesAreLeft shows which Highmaul and Blackrock Foundry raid bosses
-you have not yet killed for the week. Three difficulties are tracked:
+WhichBossesAreLeft shows which Highmaul, Blackrock Foundry, and Hellfire Citadel
+raid bosses you have not yet killed for the week. Three difficulties are tracked:
 Looking For Raid, Normal, and Heroic.
 
 ## How do I use it?
