@@ -2,6 +2,7 @@ local addonName, _ = ...
 
 local highmaulMapId = 994 -- see: http://wow.gamepedia.com/MapID#Draenor_Raids
 local blackrockFoundryMapId = 988
+local hellfireCitadelMapId = 1026
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -14,6 +15,7 @@ WhichBossesAreLeft = {
     currentRaids = {
         [GetMapNameByID(highmaulMapId)] = true,
         [GetMapNameByID(blackrockFoundryMapId)] = true,
+        [GetMapNameByID(hellfireCitadelMapId)] = true,
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
@@ -31,6 +33,13 @@ WhichBossesAreLeft = {
         {raidId = 846, start = 1, encounterEnd = 10}, -- Blackrock Foundry: The Black Forge
         {raidId = 848, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Iron Assembly
         {raidId = 823, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Blackhand's Crucible
+      },
+      [GetMapNameByID(hellfireCitadelMapId)] = {
+        {raidId = 982, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Hellbreach
+        {raidId = 983, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Halls of Blood
+        {raidId = 984, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Bastion of Shadows
+        {raidId = 985, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Destructor's Rise
+        {raidId = 986, start = 1, encounterEnd = 13}, -- Hellfire Citadel: The Black Gate
       },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
