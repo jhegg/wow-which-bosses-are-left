@@ -1,8 +1,7 @@
 local addonName, _ = ...
 
-local highmaulMapId = 994 -- see: http://wow.gamepedia.com/MapID#Draenor_Raids
-local blackrockFoundryMapId = 988
-local hellfireCitadelMapId = 1026
+local emeraldNightmareMapId = 1088
+local nightholdMapId = 1094
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -13,9 +12,8 @@ WhichBossesAreLeft = {
     version = GetAddOnMetadata(addonName, "Version"),
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
-        [GetMapNameByID(highmaulMapId)] = true,
-        [GetMapNameByID(blackrockFoundryMapId)] = true,
-        [GetMapNameByID(hellfireCitadelMapId)] = true,
+        [GetMapNameByID(emeraldNightmareMapId)] = true,
+        [GetMapNameByID(nightholdMapId)] = true,
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
@@ -23,23 +21,16 @@ WhichBossesAreLeft = {
       heroicDifficultyId,
     },
     raidFinderIds = {
-      [GetMapNameByID(highmaulMapId)] = {
-        {raidId = 849, start = 1, encounterEnd = 7}, -- Highmaul: Walled City
-        {raidId = 850, start = 1, encounterEnd = 7}, -- Highmaul: Arcane Sanctum
-        {raidId = 851, start = 1, encounterEnd = 7}, -- Highmaul: Imperator's Rise
+      [GetMapNameByID(emeraldNightmareMapId)] = {
+        {raidId = 1287, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Darkbough
+        {raidId = 1288, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Tormented Guardians
+        {raidId = 1289, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Rift of Aln
       },
-      [GetMapNameByID(blackrockFoundryMapId)] = {
-        {raidId = 847, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Slagworks
-        {raidId = 846, start = 1, encounterEnd = 10}, -- Blackrock Foundry: The Black Forge
-        {raidId = 848, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Iron Assembly
-        {raidId = 823, start = 1, encounterEnd = 10}, -- Blackrock Foundry: Blackhand's Crucible
-      },
-      [GetMapNameByID(hellfireCitadelMapId)] = {
-        {raidId = 982, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Hellbreach
-        {raidId = 983, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Halls of Blood
-        {raidId = 984, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Bastion of Shadows
-        {raidId = 985, start = 1, encounterEnd = 13}, -- Hellfire Citadel: Destructor's Rise
-        {raidId = 986, start = 1, encounterEnd = 13}, -- Hellfire Citadel: The Black Gate
+      [GetMapNameByID(nightholdMapId)] = {
+        {raidId = 1290, start = 1, encounterEnd = 10}, -- The Nighthold: Arcing Aqueducts
+        {raidId = 1291, start = 1, encounterEnd = 10}, -- The Nighthold: Royal Athenaeum
+        {raidId = 1292, start = 1, encounterEnd = 10}, -- The Nighthold: Nightspire
+        {raidId = 1293, start = 1, encounterEnd = 10}, -- The Nighthold: Betrayer's Rise
       },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
