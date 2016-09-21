@@ -1,7 +1,7 @@
 local addonName, _ = ...
 
-local emeraldNightmareMapId = 1088
-local nightholdMapId = 1094
+local emeraldNightmareMapId = 1094
+local nightholdMapId = 1088
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -13,7 +13,7 @@ WhichBossesAreLeft = {
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
         [GetMapNameByID(emeraldNightmareMapId)] = true,
-        [GetMapNameByID(nightholdMapId)] = true,
+        -- [GetMapNameByID(nightholdMapId)] = true, -- todo: raid opens in 2017
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
