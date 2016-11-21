@@ -1,6 +1,7 @@
 local addonName, _ = ...
 
 local emeraldNightmareMapId = 1094
+local trialOfValorMapId = 1114
 local nightholdMapId = 1088
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
@@ -13,6 +14,7 @@ WhichBossesAreLeft = {
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
         [GetMapNameByID(emeraldNightmareMapId)] = true,
+        [GetMapNameByID(trialOfValorMapId)] = true,
         -- [GetMapNameByID(nightholdMapId)] = true, -- todo: raid opens in 2017
     },
     sortedDifficultyIds = {
@@ -26,6 +28,10 @@ WhichBossesAreLeft = {
         {raidId = 1288, start = 1, offset = 3}, -- The Emerald Nightmare: Tormented Guardians
         {raidId = 1289, start = 1, offset = 6}, -- The Emerald Nightmare: Rift of Aln
       },
+      [GetMapNameByID(trialOfValorMapId)] = {
+        {raidId = 1411, start = 1, offset = 0}, -- Trial of Valor
+      },
+      -- Trial of Valor
       --[GetMapNameByID(nightholdMapId)] = {
         --{raidId = 1290, start = 1, encounterEnd = 10}, -- The Nighthold: Arcing Aqueducts
         --{raidId = 1291, start = 1, encounterEnd = 10}, -- The Nighthold: Royal Athenaeum
