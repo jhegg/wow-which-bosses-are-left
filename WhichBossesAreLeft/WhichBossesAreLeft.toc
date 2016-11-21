@@ -2,9 +2,9 @@
 ## Title: WhichBossesAreLeft
 ## Notes: Shows which raid bosses have not been killed this week
 ## Author: Marihk
-## Version: v2.0
+## Version: v2.1
 ## OptionalDeps: LibDBIcon-1.0
-## SavedVariables: HeroicRaidReadyDB
+## SavedVariables: WhichBossesAreLeftDB
 
 lib\LibStub\Libstub.lua
 lib\CallbackHandler-1.0\CallbackHandler-1.0.lua

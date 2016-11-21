@@ -22,16 +22,16 @@ WhichBossesAreLeft = {
     },
     raidFinderIds = {
       [GetMapNameByID(emeraldNightmareMapId)] = {
-        {raidId = 1287, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Darkbough
-        {raidId = 1288, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Tormented Guardians
-        {raidId = 1289, start = 1, encounterEnd = 7}, -- The Emerald Nightmare: Rift of Aln
+        {raidId = 1287, start = 1, offset = 0}, -- The Emerald Nightmare: Darkbough
+        {raidId = 1288, start = 1, offset = 3}, -- The Emerald Nightmare: Tormented Guardians
+        {raidId = 1289, start = 1, offset = 6}, -- The Emerald Nightmare: Rift of Aln
       },
-      [GetMapNameByID(nightholdMapId)] = {
-        {raidId = 1290, start = 1, encounterEnd = 10}, -- The Nighthold: Arcing Aqueducts
-        {raidId = 1291, start = 1, encounterEnd = 10}, -- The Nighthold: Royal Athenaeum
-        {raidId = 1292, start = 1, encounterEnd = 10}, -- The Nighthold: Nightspire
-        {raidId = 1293, start = 1, encounterEnd = 10}, -- The Nighthold: Betrayer's Rise
-      },
+      --[GetMapNameByID(nightholdMapId)] = {
+        --{raidId = 1290, start = 1, encounterEnd = 10}, -- The Nighthold: Arcing Aqueducts
+        --{raidId = 1291, start = 1, encounterEnd = 10}, -- The Nighthold: Royal Athenaeum
+        --{raidId = 1292, start = 1, encounterEnd = 10}, -- The Nighthold: Nightspire
+        --{raidId = 1293, start = 1, encounterEnd = 10}, -- The Nighthold: Betrayer's Rise
+      --},
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
     flattenedList = {}, -- The flat list of text to be displayed in the window, derived from the masterList.
@@ -91,17 +91,16 @@ local function UpdateRaidFinderBossesFromLocation(location, setOfRaidIds)
     for _, value in ipairs(setOfRaidIds) do
       local numEncounters, numCompleted = GetLFGDungeonNumEncounters(value.raidId)
 
-      -- Since the encounters are out of order, just loop over all of them
-      -- for each encounterId, and if any have isKilled=true, then set it to true.
-      for encounterId = value.start, value.encounterEnd do
+      for encounterId = value.start, numEncounters do
         local bossName, texture, isKilled, result4 = GetLFGDungeonEncounterInfo(value.raidId, encounterId)
-        if not listEntry.bosses[encounterId] then
-          listEntry.bosses[encounterId] = {}
-          listEntry.bosses[encounterId].name = bossName
+        local encounterIdPlusOffset = encounterId + value.offset
+        if not listEntry.bosses[encounterIdPlusOffset] then
+          listEntry.bosses[encounterIdPlusOffset] = {}
+          listEntry.bosses[encounterIdPlusOffset].name = bossName
         end
 
-        if not listEntry.bosses[encounterId].isKilled then
-          listEntry.bosses[encounterId].isKilled = isKilled
+        if not listEntry.bosses[encounterIdPlusOffset].isKilled then
+          listEntry.bosses[encounterIdPlusOffset].isKilled = isKilled
         end
       end
     end
@@ -137,7 +136,7 @@ function WhichBossesAreLeft:RebuildFlattenedList()
                   counter = counter + 1
                   flattenedList[counter] = {}
                   flattenedList[counter].isKilled = bossValue.isKilled
-                  flattenedList[counter].text = "      > "..bossValue.name
+                  flattenedList[counter].text = "      > "..tostring(bossValue.name)
               end
           else
               local difficultyName = GetDifficultyInfo(sortedDifficultyId)
