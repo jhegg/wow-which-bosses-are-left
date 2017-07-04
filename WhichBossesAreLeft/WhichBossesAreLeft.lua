@@ -3,6 +3,7 @@ local addonName, _ = ...
 local emeraldNightmareMapId = 1094
 local trialOfValorMapId = 1114
 local nightholdMapId = 1088
+local tombOfSargerasMapId = 1147
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -15,7 +16,8 @@ WhichBossesAreLeft = {
     currentRaids = {
         [GetMapNameByID(emeraldNightmareMapId)] = true,
         [GetMapNameByID(trialOfValorMapId)] = true,
-        -- [GetMapNameByID(nightholdMapId)] = true, -- todo: raid opens in 2017
+        [GetMapNameByID(nightholdMapId)] = true,
+        [GetMapNameByID(tombOfSargerasMapId)] = true,
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
@@ -31,13 +33,18 @@ WhichBossesAreLeft = {
       [GetMapNameByID(trialOfValorMapId)] = {
         {raidId = 1411, start = 1, offset = 0}, -- Trial of Valor
       },
-      -- Trial of Valor
-      --[GetMapNameByID(nightholdMapId)] = {
-        --{raidId = 1290, start = 1, encounterEnd = 10}, -- The Nighthold: Arcing Aqueducts
-        --{raidId = 1291, start = 1, encounterEnd = 10}, -- The Nighthold: Royal Athenaeum
-        --{raidId = 1292, start = 1, encounterEnd = 10}, -- The Nighthold: Nightspire
-        --{raidId = 1293, start = 1, encounterEnd = 10}, -- The Nighthold: Betrayer's Rise
-      --},
+      [GetMapNameByID(nightholdMapId)] = {
+        {raidId = 1290, start = 1, offset = 0}, -- The Nighthold: Arcing Aqueducts
+        {raidId = 1291, start = 1, offset = 3}, -- The Nighthold: Royal Athenaeum
+        {raidId = 1292, start = 1, offset = 6}, -- The Nighthold: Nightspire
+        {raidId = 1293, start = 1, offset = 9}, -- The Nighthold: Betrayer's Rise
+      },
+      [GetMapNameByID(tombOfSargerasMapId)] = {
+        {raidId = 1494, start = 1, offset = 0}, -- Tomb of Sargeras: The Gates of Hell
+        {raidId = 1495, start = 1, offset = 3}, -- Tomb of Sargeras: Wailing Halls
+        {raidId = 1496, start = 1, offset = 6}, -- Tomb of Sargeras: Chamber of the Avatar
+        {raidId = 1497, start = 1, offset = 9}, -- Tomb of Sargeras: Deceiver's Fall
+      },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
     flattenedList = {}, -- The flat list of text to be displayed in the window, derived from the masterList.
