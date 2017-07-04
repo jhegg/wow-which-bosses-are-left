@@ -1,14 +1,13 @@
 # Which Bosses Are Left?
 ---
 
-A World of Warcraft addon that shows which Legion raid bosses have not been
+A World of Warcraft addon that shows which current Legion raid bosses have not been
 killed this week.
 
 ## What does it do?
 
-WhichBossesAreLeft shows which Emerald Nightmare
-raid bosses you have not yet killed for the week. Three difficulties are tracked:
-Looking For Raid, Normal, and Heroic.
+WhichBossesAreLeft shows which current raid bosses you have not yet killed for
+the week. Three difficulties are tracked: Looking For Raid, Normal, and Heroic.
 
 ## How do I use it?
 
