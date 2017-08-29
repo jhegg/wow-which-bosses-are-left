@@ -208,3 +208,25 @@ function WhichBossesAreLeft:CreateScrollFrame(frame)
     scrollFrame.ScrollBar.scrollStep = 1 * WhichBossesAreLeft.ITEM_HEIGHT
     return scrollFrame
 end
+
+local function clickRaidFrameButton()
+    if (WhichBossesAreLeft.frame:IsShown()) then
+      WhichBossesAreLeft.frame:Hide()
+    else
+      WhichBossesAreLeft:DisplayWindow()
+    end
+end
+
+function WhichBossesAreLeft:CreateButtonOnRaidFrame()
+    local button = CreateFrame("Button", "WBALButton", RaidFrame, "UIPanelButtonTemplate")
+    button:SetSize(16, 16)
+    button:SetNormalTexture("Interface\\Icons\\ACHIEVEMENT_BOSS_KILJAEDAN")
+    button:SetPoint("TOPRIGHT", -110, -27)
+    button:SetScript("OnClick", clickRaidFrameButton)
+    button:SetScript("OnEnter", function (self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText("Which Bosses Are Left?")
+    end)
+    button:SetScript("OnLeave", function () GameTooltip:Hide() end)
+    WhichBossesAreLeft.raidFrameButton = button
+end
