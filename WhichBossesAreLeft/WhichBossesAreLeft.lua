@@ -1,6 +1,7 @@
 local addonName, _ = ...
 
 local tombOfSargerasMapId = 1147
+local antorusMapId = 1188
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -12,6 +13,7 @@ WhichBossesAreLeft = {
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
         [GetMapNameByID(tombOfSargerasMapId)] = true,
+        [GetMapNameByID(antorusMapId)] = true,
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
@@ -24,6 +26,12 @@ WhichBossesAreLeft = {
         {raidId = 1495, start = 1, offset = 3}, -- Tomb of Sargeras: Wailing Halls
         {raidId = 1496, start = 1, offset = 6}, -- Tomb of Sargeras: Chamber of the Avatar
         {raidId = 1497, start = 1, offset = 9}, -- Tomb of Sargeras: Deceiver's Fall
+      },
+      [GetMapNameByID(antorusMapId)] = {
+        {raidId = 1610, start = 1, offset = 0}, -- Antorus: Light's Breach
+        {raidId = 1611, start = 1, offset = 3}, -- Antorus: Forbidden Descent
+        {raidId = 1612, start = 1, offset = 6}, -- Antorus: Hope's End
+        {raidId = 1613, start = 1, offset = 7}, -- Antorus: Seat of the Pantheon
       },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.

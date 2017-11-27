@@ -2,7 +2,7 @@
 ## Title: WhichBossesAreLeft
 ## Notes: Shows which current raid bosses have not been killed this week
 ## Author: Marihk
-## Version: v3.1
+## Version: v3.2
 ## OptionalDeps: LibDBIcon-1.0
 ## SavedVariables: WhichBossesAreLeftDB
 

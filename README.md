@@ -4,6 +4,8 @@
 A World of Warcraft addon that shows which current Legion raid bosses have not been
 killed this week.
 
+"Current" at this time means Tomb of Sargeras and Antorus, the Burning Throne.
+
 ## What does it do?
 
 WhichBossesAreLeft shows which current raid bosses you have not yet killed for
@@ -40,5 +42,5 @@ difficulty bosses are available for the week.
 ## Where can I download official releases of this addon?
 
 * [WoWInterface](http://www.wowinterface.com/downloads/info23546-WhichBossesAreLeft.html)
-* [Curse](http://www.curse.com/addons/wow/whichbossesareleft)
+* [Curse](https://www.curseforge.com/wow/addons/whichbossesareleft)
 * [GitHub (development site)](https://github.com/jhegg/wow-which-bosses-are-left/)
