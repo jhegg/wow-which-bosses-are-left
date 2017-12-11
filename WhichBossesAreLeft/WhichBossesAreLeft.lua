@@ -29,9 +29,9 @@ WhichBossesAreLeft = {
       },
       [GetMapNameByID(antorusMapId)] = {
         {raidId = 1610, start = 1, offset = 0}, -- Antorus: Light's Breach
-        {raidId = 1611, start = 1, offset = 3}, -- Antorus: Forbidden Descent
-        {raidId = 1612, start = 1, offset = 6}, -- Antorus: Hope's End
-        {raidId = 1613, start = 1, offset = 7}, -- Antorus: Seat of the Pantheon
+        --{raidId = 1611, start = 1, offset = 3}, -- Antorus: Forbidden Descent
+        --{raidId = 1612, start = 1, offset = 6}, -- Antorus: Hope's End
+        --{raidId = 1613, start = 1, offset = 7}, -- Antorus: Seat of the Pantheon
       },
     },
     masterList = {}, -- The data about active instance locks and which bosses are killed.
