@@ -1,8 +1,8 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: WhichBossesAreLeft
 ## Notes: Shows which current raid bosses have not been killed this week
 ## Author: Marihk
-## Version: v3.3
+## Version: v3.4
 ## OptionalDeps: LibDBIcon-1.0
 ## SavedVariables: WhichBossesAreLeftDB
 
