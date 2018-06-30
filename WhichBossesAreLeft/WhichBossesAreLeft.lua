@@ -1,7 +1,10 @@
 local addonName, _ = ...
 
-local tombOfSargerasMapId = 1147
-local antorusMapId = 1188
+-- TODO after 8.0 patch, remove worldMapAreaId
+local tombOfSargerasMapId = {worldMapAreaId = 1147, uiMapId = 850}
+local tombOfSargerasMapName = GetMapNameByID and GetMapNameByID(tombOfSargerasMapId.worldMapAreaId) or C_Map.GetMapInfo(tombOfSargerasMapId.uiMapId).name
+local antorusMapId = {worldMapAreaId = 1188, uiMapId = 909}
+local antorusMapName = GetMapNameByID and GetMapNameByID(antorusMapId.worldMapAreaId) or C_Map.GetMapInfo(antorusMapId.uiMapId).name
 
 local normalDifficultyId = 14 -- see: http://wow.gamepedia.com/API_GetDifficultyInfo#Details
 local heroicDifficultyId = 15
@@ -12,8 +15,8 @@ WhichBossesAreLeft = {
     version = GetAddOnMetadata(addonName, "Version"),
     author = GetAddOnMetadata(addonName, "Author"),
     currentRaids = {
-        [GetMapNameByID(tombOfSargerasMapId)] = true,
-        [GetMapNameByID(antorusMapId)] = true,
+        [tombOfSargerasMapName] = true,
+        [antorusMapName] = true,
     },
     sortedDifficultyIds = {
       lookingForRaidDifficultyId,
@@ -21,13 +24,13 @@ WhichBossesAreLeft = {
       heroicDifficultyId,
     },
     raidFinderIds = {
-      [GetMapNameByID(tombOfSargerasMapId)] = {
+      [tombOfSargerasMapName] = {
         {raidId = 1494, start = 1, offset = 0}, -- Tomb of Sargeras: The Gates of Hell
         {raidId = 1495, start = 1, offset = 3}, -- Tomb of Sargeras: Wailing Halls
         {raidId = 1496, start = 1, offset = 6}, -- Tomb of Sargeras: Chamber of the Avatar
         {raidId = 1497, start = 1, offset = 9}, -- Tomb of Sargeras: Deceiver's Fall
       },
-      [GetMapNameByID(antorusMapId)] = {
+      [antorusMapName] = {
         {raidId = 1610, start = 1, offset = 0}, -- Antorus: Light's Breach
         --{raidId = 1611, start = 1, offset = 3}, -- Antorus: Forbidden Descent
         --{raidId = 1612, start = 1, offset = 6}, -- Antorus: Hope's End
